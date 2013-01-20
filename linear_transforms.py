@@ -64,8 +64,8 @@ def unit_square_transform(M='0, 3; 1, -1', saveas='/tmp/unit.png', show_fig=Fals
 
     clf()
 
-    plot(p[0, :], p[1, :], label='Unit square')
-    plot(t[0, :], t[1, :], label='Transformed')
+    plot(p[0, :], p[1, :], label='Unit square', marker='o')
+    plot(t[0, :], t[1, :], label='Transformed', marker='o')
 
     max_i, max_j = np.unravel_index(abs(t).argmax(), t.shape)
     maxval = abs(t[max_i, max_j])
@@ -85,12 +85,25 @@ def unit_square_transform(M='0, 3; 1, -1', saveas='/tmp/unit.png', show_fig=Fals
     return t
 
 
-def linear_sequence(m='5,7;-2,-4', initial='1;1', terms=4):
+def linear_sequence(m, initial, terms):
     """
-        Returns up to item xn where n=terms of the linear recurrance
+        Returns up to item xn where n = terms + 1 of the linear recurrance
         sequence defined by matrix m using a specified initial term.
     """
     A = matrix(m)
     x0 = matrix(initial)
     vals = [A ** n * x0 for n in range(terms + 1)]
-    return vals
+    return array(vals).reshape(terms + 1, 2).transpose()
+
+
+def plot_sequence(m='5,7;-2,-4', initial='1;1', terms=4, saveas='/tmp/sequence.png', show_fig=False):
+    seq = linear_sequence(m, initial, terms)
+
+    clf()
+    grid()
+    plot(seq[0, :], seq[1, :], marker='o')
+
+    savefig(saveas)
+
+    if show_fig:
+        show()
