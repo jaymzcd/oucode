@@ -25,6 +25,10 @@ Python code to (so far):
 * Transform the unit square with an abritary 2x2 matrix and plot result
 * Generate terms of a linear recurrance relation with given transform & inital term
 
+Matplotlib provides output diagrams as PNGs:
+
+![transform example](example/unitsquare.png)
+
 ## M248 & MST121
 
 I completed these prior to doing much so there's no code relating to these modules.
