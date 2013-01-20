@@ -12,6 +12,8 @@ As a linux & python user I tend to do most of my work using [scipy](http://scipy
 within pylab. In addition I make use of [sympy](http://sympy.org). I do my formal
 writing using [lyx](http://lyx.org).
 
+![ou](http://www.open.ac.uk/includes/headers-footers/oulogo-56.jpg)
+
 You can find some more about me on a rather stale blog at [jaymz.eu](http://jaymz.eu)
 
 ## MS221
