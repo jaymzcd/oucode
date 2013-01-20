@@ -27,7 +27,7 @@ Python code to (so far):
 
 Matplotlib provides output diagrams as PNGs:
 
-![transform example](example/unitsquare.png)
+![transform example](https://raw.github.com/jaymzcd/oucode/master/example/unitsquare.png)
 
 ## M248 & MST121
 
