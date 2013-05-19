@@ -27,9 +27,19 @@ Python code to (so far):
 
 Matplotlib provides output diagrams as PNGs:
 
-![transform example](http://i.imgur.com/vRCDAAh.png)
 
 ![sequence example](http://i.imgur.com/4HneFIB.png)
+![transform example](http://i.imgur.com/vRCDAAh.png)
+
+### Function plots
+
+Simple function plots of single parameter. The expression parsing is handled using
+[sympy](http://docs.sympy.org/dev/modules/parsing.html). This is also used
+to create Latex titles for matplotlib.
+
+    plot_func.py "x**3-x**2+x-3+100*cos(10*x)" -10 10
+
+![plot example](http://i.imgur.com/hafUmYy.png)
 
 ### Cayley tables for integer rings
 
