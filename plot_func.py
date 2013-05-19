@@ -6,9 +6,7 @@ from sympy import Symbol
 from sympy.printing import latex
 from sympy.parsing.sympy_parser import parse_expr
 
-
-def setup():
-    rcParams['text.usetex']=True
+from common import setup_mpl
 
 
 def draw_plot(f, lower=-10, upper=-10, num=250):
@@ -23,5 +21,5 @@ def draw_plot(f, lower=-10, upper=-10, num=250):
 
 
 if __name__=='__main__':
-    setup()
-    draw_plot(sys.argv[1], int(sys.argv[2], 10), int(sys.argv[3], 10))
+    setup_mpl()
+    draw_plot(sys.argv[1], float(sys.argv[2]), float(sys.argv[3]))

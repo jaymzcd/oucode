@@ -1,6 +1,8 @@
 from shapely.geometry import LineString
 from pylab import *
 
+from common import setup_mpl
+
 #     __  ___________  ___  ___
 #    /  |/  / ___/__ \|__ \<  /
 #   / /|_/ /\__ \__/ /__/ // /
@@ -62,6 +64,7 @@ def unit_square_transform(M='0, 3; 1, -1', saveas='/tmp/unit.png', show_fig=Fals
     t = [np.matrix(p[:, x]) * M for x in range(p.shape[1])]
     t = np.array(t).reshape(p.shape[1], 2).transpose()
 
+    setup_mpl()
     clf()
 
     plot(p[0, :], p[1, :], label='Unit square', marker='o')
@@ -98,7 +101,7 @@ def linear_sequence(m, initial, terms):
 
 def plot_sequence(m='5,7;-2,-4', initial='1;1', terms=4, saveas='/tmp/sequence.png', show_fig=False):
     seq = linear_sequence(m, initial, terms)
-
+    setup_mpl()
     clf()
     grid()
     plot(seq[0, :], seq[1, :], marker='o')
@@ -106,3 +109,4 @@ def plot_sequence(m='5,7;-2,-4', initial='1;1', terms=4, saveas='/tmp/sequence.p
 
     if show_fig:
         show()
+

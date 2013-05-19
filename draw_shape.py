@@ -1,6 +1,8 @@
 from shapely.geometry import LineString
 from pylab import *
 
+from common import setup_mpl
+
 
 def draw_shape(coords):
     _coords = coords + (coords[0], )  # Make complete loop
@@ -24,5 +26,6 @@ def draw_shape(coords):
 
 
 if __name__=='__main__':
+    setup_mpl()
     pts = ((2, 2), (-1, 1), (-2, -2), (1, -1))
     draw_shape(pts)
