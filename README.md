@@ -27,7 +27,7 @@ Python code to (so far):
 
 Matplotlib provides output diagrams as PNGs:
 
-![transform example](https://raw.github.com/jaymzcd/oucode/master/example/unitsquare.png)
+![transform example](http://i.imgur.com/vRCDAAh.png)
 
 ### Cayley tables for integer rings
 
@@ -37,9 +37,9 @@ the resultant files together for comparassion.
 
 By setting `exclude_zero` to `True` the 0-row will not be shown.
 
-![ring 13](https://raw.github.com/jaymzcd/oucode/master/example/ring-13.png)
+![ring 13](http://i.imgur.com/YzAn6jV.png)
 
-![rings](https://raw.github.com/jaymzcd/oucode/master/example/rings.png)
+![rings](http://i.imgur.com/FEud05mh.png)
 
 ## M248 & MST121
 
