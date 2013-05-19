@@ -29,6 +29,18 @@ Matplotlib provides output diagrams as PNGs:
 
 ![transform example](https://raw.github.com/jaymzcd/oucode/master/example/unitsquare.png)
 
+### Cayley tables for integer rings
+
+Uses sage & matplotlib to visualize a multiplcation table for integer rings. That
+is the remainders mod X for integers up to X. Imagemagick is used to montage
+the resultant files together for comparassion.
+
+By setting `exclude_zero` to `True` the 0-row will not be shown.
+
+![ring 13](https://raw.github.com/jaymzcd/oucode/master/example/ring-13.png)
+
+![rings](https://raw.github.com/jaymzcd/oucode/master/example/rings.png)
+
 ## M248 & MST121
 
 I completed these prior to doing much so there's no code relating to these modules.
