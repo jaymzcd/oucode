@@ -9,7 +9,7 @@ from pylab import *
 from subprocess import call
 
 
-def cayley(x):
+def cayley(x, exclude_zero=True):
     """
         Generates a cayley table for Z_x and saves the output as a
         color coded image using matplotlib.
@@ -18,8 +18,13 @@ def cayley(x):
     Zx = Integers(x)  # Create integer ring of order x
     t = Zx.multiplication_table()
     table = t.table()
+
+    if exclude_zero:
+        table = [r[1:] for r in table[1:]]
+
     imshow(table, interpolation='nearest')
-    colorbar()
+    axis('off')
+
     fout = '/tmp/ring-%02d.png' % x
     savefig(fout)
     return fout, table
@@ -41,7 +46,7 @@ def grid(lower, upper):
         cayley(x)
         print "Created %d" % x
 
-    call(['montage', '-label', '%f', '/tmp/ring-*.png', '-geometry', '300x', '-tile', '6x', '/tmp/rings.png'])
+    call(['montage', '-label', '%f', '/tmp/ring-*.png', '-geometry', '600x', '-tile', '6x', '/tmp/rings.png'])
 
 
 if __name__=='__main__':
