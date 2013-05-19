@@ -29,6 +29,8 @@ Matplotlib provides output diagrams as PNGs:
 
 ![transform example](http://i.imgur.com/vRCDAAh.png)
 
+![sequence example](http://i.imgur.com/4HneFIB.png)
+
 ### Cayley tables for integer rings
 
 Uses sage & matplotlib to visualize a multiplcation table for integer rings. That

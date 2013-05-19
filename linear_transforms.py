@@ -102,7 +102,6 @@ def plot_sequence(m='5,7;-2,-4', initial='1;1', terms=4, saveas='/tmp/sequence.p
     clf()
     grid()
     plot(seq[0, :], seq[1, :], marker='o')
-
     savefig(saveas)
 
     if show_fig:
