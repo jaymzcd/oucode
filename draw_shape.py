@@ -4,7 +4,7 @@ from pylab import *
 from common import setup_mpl
 
 
-def draw_shape(coords):
+def draw_shape(coords, add_title=False):
     _coords = coords + (coords[0], )  # Make complete loop
     pts = LineString(_coords)
 
@@ -19,7 +19,8 @@ def draw_shape(coords):
     ylim(_min, _max)
     xlim(_min, _max)
     grid()
-    title('Shape: %r' % (coords, ))
+    if add_title:
+        title('$%r$' % (coords, ))
     show()
     savefig('/tmp/shape.png', dpi=150)
     return pts
