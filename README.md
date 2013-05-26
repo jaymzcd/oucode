@@ -53,6 +53,22 @@ By setting `exclude_zero` to `True` the 0-row will not be shown.
 
 ![rings](http://i.imgur.com/FEud05mh.png)
 
+### Handbook/Module Solvers
+
+The code within the `solvers.py` module are a variety of functions that tackle
+various key bits within the course in terms of the step by step solutions and
+methods that you would work through. For example calculating eigenlines and values
+for a particular matrix is very easy with sympy but rather than using a one line
+built in library function the entire method is worked out as it is within
+the course text.
+
+This makes them a bit more useful for learning and testing / comparing work
+with any examples rather than just those within the course texts or past papers.
+There is code to deal with:
+
+* Linear second order recurrences - closed forms
+* Matrix eigen-_values, lines, vectors_
+
 ## M248 & MST121
 
 I completed these prior to doing much so there's no code relating to these modules.
