@@ -14,6 +14,11 @@ writing using [lyx](http://lyx.org).
 
 ![ou](http://www.open.ac.uk/includes/headers-footers/oulogo-56.jpg)
 
+Here I am at [Colossus](http://en.wikipedia.org/wiki/Colossus_computer) recently at
+the [National Museum of Computing](http://www.tnmoc.org/).
+
+![me at colossus](http://i.imgur.com/OZDz6Uw.png)
+
 You can find some more about me on a rather stale blog at [jaymz.eu](http://jaymz.eu)
 
 ## MS221
