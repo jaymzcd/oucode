@@ -67,7 +67,7 @@ with any examples rather than just those within the course texts or past papers.
 There is code to deal with:
 
 * Linear second order recurrences - closed forms
-* Matrix eigen-_values, lines, vectors_
+* Matrix eigen _values, lines, vectors_
 
 ## M248 & MST121
 
