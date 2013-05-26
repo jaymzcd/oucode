@@ -9,7 +9,7 @@ from sympy.parsing.sympy_parser import parse_expr
 from common import setup_mpl
 
 
-def draw_plot(f, lower=-10, upper=-10, num=250):
+def draw_plot(f, lower=-10, upper=-10, num=1000):
     y = parse_expr(f)
     xvals = linspace(lower, upper, num=num)
     vals = [y.evalf(subs={'x': x}) for x in xvals]

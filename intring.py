@@ -9,7 +9,7 @@ from pylab import *
 from subprocess import call
 
 
-def cayley(x, exclude_zero=True):
+def cayley(x, exclude_zero=False):
     """
         Generates a cayley table for Z_x and saves the output as a
         color coded image using matplotlib.
