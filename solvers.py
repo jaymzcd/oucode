@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+
+import unittest
+
+from sympy import Symbol, symbols, Matrix, simplify, exp, oo
+from sympy.abc import x
+from sympy.parsing.sympy_parser import parse_expr
+from sympy.printing import pretty_print, pretty
+from sympy.solvers import solve, solvers
+
 # .        :   .::::::.   .:::.    .:::.  :.
 # ;;,.    ;;; ;;;`    `  ,;'``;.  ,;'``;. ;;
 # [[[[, ,[[[[,'[==/[[[[, ''  ,[[' ''  ,[['[[
@@ -53,14 +63,30 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import unittest
+#   ::   .: .,::::::   :::  ::::::::::. .,:::::: :::::::..   .::::::.
+#  ,;;   ;;,;;;;''''   ;;;   `;;;```.;;;;;;;'''' ;;;;``;;;; ;;;`    `
+# ,[[[,,,[[[ [[cccc    [[[    `]]nnn]]'  [[cccc   [[[,/[[[' '[==/[[[[,
+# "$$$"""$$$ $$""""    $$'     $$$""     $$""""   $$$$$$c     '''    $
+#  888   "88o888oo,__ o88oo,.__888o      888oo,__ 888b "88bo,88b    dP
+#  MMM    YMM""""YUMMM""""YUMMMYMMMb     """"YUMMMMMMM   "W"  "YMmMY"
 
-from sympy import Symbol, symbols, Matrix, simplify
-from sympy.parsing.sympy_parser import parse_expr
-from sympy.printing import pretty_print, pretty
-from sympy.solvers import solve, solvers
+
+def filter_reals(vals):
+    """
+        In many cases we'll need to only consider real roots or intercepts so
+        filter out any complex values when returning results
+    """
+    return [val for val in vals if val.is_real]
 
 
+def _eval(func, x):
+    """
+        Evaluates the sympy function func for a given x
+    """
+    return func.evalf(subs={'x': x})
+
+
+# Alias the sympy pretty function as pp for convinence
 pp = pretty
 
 
@@ -228,6 +254,123 @@ def matrix_eigenvector(m, line=0, x=1):
     print 'Eigenvector for eigenline %s (x=%0.2f):\n\n%s\n' % (eigenlines[line], x, pp(eigenvector))
     return eigenvector
 
+def fixed_points(func):
+    """
+        Module B1, Page 13
+
+        A fixed pointsuch that f (a) = a of a real function f
+        is a number a in the domain of f
+    """
+    # This is pretty simple, just solve f(x) = x, that is
+    # f(x) - x = 0
+    points = solve(func - x)
+    print "Fixed points of %s are %s" % (func, points)
+    return points
+
+
+# .        :       ...    :::::::-.   ...    ::: :::    .,::::::      .,-:::::
+# ;;,.    ;;;   .;;;;;;;.  ;;,   `';, ;;     ;;; ;;;    ;;;;''''    ,;;;'````'
+# [[[[, ,[[[[, ,[[     \[[,`[[     [[[['     [[[ [[[     [[cccc     [[[
+# $$$$$$$$"$$$ $$$,     $$$ $$,    $$$$      $$$ $$'     $$""""     $$$
+# 888 Y88" 888o"888,_ _,88P 888_,o8P'88    .d888o88oo,.__888oo,__   `88bo,__,o,
+# MMM  M'  "MMM  "YMMMMMP"  MMMMP"`   "YmmMMMM""""""YUMMM""""YUMMM    "YUMMMMMP"
+
+def is_even_function(func, i=range(1, 10)):
+    """
+        If the graph of a function f is unchanged under reflection in the
+        y-axis, as in Figure 3.2(a), then f is said to be an even function.
+        Thus f is even if
+
+        f (−x) = f (x), for all x in the domain of f.
+    """
+    is_even = all([_eval(func, _x) == _eval(func, -_x) for _x in i])
+    return is_even
+
+
+def is_odd_function(func, i=range(1, 10)):
+    """
+        If the graph of f is unchanged by rotation through the angle π about
+        the origin, as in Figure 3.2(b), then f is said to be an odd function.
+        Thus f is odd if
+
+        f (−x) = −f (x), for all x in the domain of f.
+    """
+    is_odd = all([_eval(func, -_x) == -_eval(func, _x) for _x in i])
+    return is_odd
+
+
+def function_type(func):
+    """
+        Module C1, Page 30
+
+        Returns 'odd', 'even' or 'neither' for a given function
+    """
+    is_even = is_even_function(func)
+    is_odd = is_odd_function(func)
+
+    if is_even and not is_odd:
+        ftype = 'even'
+    if is_odd and not is_even:
+        ftype = 'odd'
+    if not is_odd and not is_even:
+        ftype = 'neither'
+
+    print "Function %s is %s" % (func, ftype)
+    return ftype
+
+def graph_sketching_strategy(func):
+    """
+        Module C1, Page 36
+
+        Strategy: To sketch the graph of a given function f, determine the
+        following features of f (where possible) and then show these features
+        in your sketch.
+
+        1.   The domain of f .
+        2.   Whether f is even or odd.
+        3.   The x- and y-intercepts of f .
+        4.   The intervals on which f is positive or negative.
+        5.   The intervals on which f is increasing or decreasing and any
+             stationary points, local maxima and local minima.
+        6.   The asymptotic behaviour of f .
+
+    """
+
+    # Step 2 - even or odd or neither? This isn't really that necessary
+    # for this automated plot of the function but is nice to annotate
+    # the graph with and will have to be shown in any TMA/exam working
+    ftype = function_type(func)
+
+    # Step 3 - intercepts are easy to work out with a bit of algebra
+    # or evalutating it at x = 0
+
+    y_intercepts = _eval(func, 0)  # y-intercept is solution(s) to f(0)
+    x_intercepts = filter_reals(solve(func))  # x-intercepts is solution(s) to f(x) = 0
+
+    # Step 4 - we need to find any poles (discontinuties). We can do that
+    # symbolically by solving the equation 1/f(x) = 0. If f has a pole then
+    # it will be a root of this equation
+    poles = solve(1/func, x)
+
+    # Now we'll check between these groups what the value of the function
+    # is to determine if postive or negative in that region. Again this would
+    # be obviously visible on the generated plot regardless but this is for
+    # _sketching_ manually, so we want to summarise and work all this out
+    # as if by hand too.
+    points = [oo, ] + poles + [oo, ]
+
+    print """
+        The function %(func)s is of type: %(ftype)s. The y-intercept
+        are %(yints)r and the x-intercepts are %(xints)r.
+    """ % {
+        'func': func,
+        'ftype': ftype,
+        'yints': y_intercepts,
+        'xints': x_intercepts,
+    }
+
+    return
+
 
 # ::::::::::::.,:::::: .::::::.:::::::::::: .::::::.
 # ;;;;;;;;'''';;;;'''';;;`    `;;;;;;;;'''';;;`    `
@@ -235,7 +378,10 @@ def matrix_eigenvector(m, line=0, x=1):
 #      $$      $$""""   '''    $    $$       '''    $
 #      88,     888oo,__88b    dP    88,     88b    dP
 #      MMM     """"YUMMM"YMmMY"     MMM      "YMmMY"
-
+#
+# These are taken from the various examples, activities and TMA/past papers
+# so that they should be pretty well vetted in the first place! References
+# to page numbers correspond to the course texts supplied as PDFs.
 
 class ModuleA_Tests(unittest.TestCase):
 
@@ -285,6 +431,29 @@ class ModuleB_Tests(unittest.TestCase):
         m = Matrix([[1, 2], [3, 2]])
         eigenvector = matrix_eigenvector(m, line=1, x=2)
         self.assertEqual(eigenvector, Matrix([2, 3]))
+
+    def test_fixedpoints(self):
+        # Module B1 Page 26
+        points = fixed_points(parse_expr('x**2 + 1/8'))
+        self.assertEqual(points[0], parse_expr('1/2 - 1/4 * sqrt(2)'))
+        self.assertEqual(points[1], parse_expr('1/2 + 1/4 * sqrt(2)'))
+
+
+class ModuleC_Tests(unittest.TestCase):
+
+    def test_function_types(self):
+        # Module C1 Page 30, 37, 38, 39
+
+        funcs = {
+            x ** 2: 'even',
+            x: 'odd',
+            (2 * x - 3) / (x - 1): 'neither',
+            x / (x**2 + 1): 'odd',
+            (x - 2) * exp(x): 'neither',
+        }
+
+        for func in funcs:
+            self.assertEqual(function_type(func), funcs[func])
 
 
 if __name__=='__main__':
