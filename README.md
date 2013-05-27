@@ -3,10 +3,10 @@
 Code that I write to help me work through my Open University degree. I have or am
 studying the following modules:
 
-* MST121 (pass)
-* M248 (Grade 2 pass)
-* MS221 (Current)
-* M336 (Current)
+* MST121 - Using Mathematics (Autumn 2011, pass, no other grade type)
+* M248 - Analysing Data (Spring 2012, Grade 2 pass)
+* MS221 - Exploring Mathematics (Currently studying - Autumn 2012)
+* M336 - Artifical & Natural Intelligence (Currently studying - Spring 2013)
 
 As a linux & python user I tend to do most of my work using [scipy](http://scipy.org)
 within pylab. In addition I make use of [sympy](http://sympy.org). I do my formal
@@ -73,6 +73,10 @@ There is code to deal with:
 
 * Linear second order recurrences - closed forms
 * Matrix eigen _values, lines, vectors_
+* Graph sketching - function properties such as if even or odd,
+  discontinuties, ranges and so on.
+* Fixed points and cycles, classifications of such points as repelling,
+  attracting, super-attracting etc.
 
 ## M248 & MST121
 
