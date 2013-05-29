@@ -471,6 +471,31 @@ class DivisibilityTests(object):
         """
         return sum([d * 10**i for i, d in enumerate(x)])
 
+    def alternating_sum(self, digits, offset=0):
+        """
+            Returns the sum of the digits but alternated in sign. Setting
+            offset to 1 will result in the _first_ term being negated.
+        """
+        return sum([(-1) ** (i + offset) * d for i, d in enumerate(digits)])
+
+    def grouped_by_sums(self, x, modulus, n=3):
+        """
+            Essentially the algorithim for divisibility by 7 and 13
+        """
+        digits = str(x)[::-1]  # Reverse the string form of x
+        # Create groupings of 3 of each number. We use the reversed digit string
+        # so that the range works nicely going up rather than backwards even
+        # when the length isn't divisible by 3. This also means we need to
+        # reverse again the resultant groups of digits
+        groups = [digits[i:i + n][::-1] for i in range(0, len(digits), n)]
+        # Now we can get the modulus of these after casting to int
+        group_modN = [int(x, 10) % modulus for x in groups]
+        print "Grouped digits %r mod %d: %r" % (groups, modulus, group_modN)
+        alternating_sum = self.alternating_sum(group_modN)
+        r = alternating_sum % modulus
+        print "Alternating sum: %d, remainder: %d" % (alternating_sum, r)
+        return r
+
     def by_2(self, x):
         """
             A number is divisible by 2 if the _last_ digit is
@@ -499,13 +524,16 @@ class DivisibilityTests(object):
         """
         # Remember, the returned digits are reversed so we need the first two
         # (they're in order of size, 10**0, 10**1, 10**2, etc)
-        last_two_digits = self.inflate_digits(self.digits(x)[:2])
-        r = (last_two_digits)  % 4
-        print "Dividing %d by 4 - check %d: %d" % (x, last_two_digits, r)
+        first_two_digits = self.inflate_digits(self.digits(x)[:2])
+        r = (first_two_digits)  % 4
+        print "Dividing %d by 4 - checking %d: %d" % (x, first_two_digits, r)
         return r
 
     def by_5(self, x):
-        pass
+        first_digit = self.digits(x)[0]
+        r = (first_digit)  % 5
+        print "Dividing %d by 5 - checking %d: %d" % (x, first_digit, r)
+        return r
 
     def by_6(self, x):
         """
@@ -524,7 +552,18 @@ class DivisibilityTests(object):
         return r6
 
     def by_7(self, x):
-        pass
+        """
+            Module D2, Page 19
+
+            These ones involve the alternating digit sum mod 13 of groups of
+            3. This is based on the following factorization of 1001:
+
+                1001 = 7 × 11 × 13
+
+            Which implies that 1000 ≡ −1 (mod 7 and 13). A similar argument
+            to that of the by_11 case then applies.
+        """
+        return self.grouped_by_sums(x, 7)
 
     def by_8(self, x):
         """
@@ -568,7 +607,7 @@ class DivisibilityTests(object):
 
         # We start by getting the digits in the order of least signifigant first
         digits = self.digits(x, reverse=True)
-        alternating_sum = sum([(-1)**i * d for i, d in enumerate(digits)])
+        alternating_sum = self.alternating_sum(digits)
         r = alternating_sum % 11
 
         print "Alternating sum: %d gives %d" % (alternating_sum, r)
@@ -585,7 +624,7 @@ class DivisibilityTests(object):
         """
 
     def by_13(self, x):
-        pass
+        return self.grouped_by_sums(x, 13)
 
 
 # ::::::::::::.,:::::: .::::::.:::::::::::: .::::::.
@@ -703,9 +742,17 @@ class ModuleD_Tests(unittest.TestCase):
         self.assertEqual(self.div_tester.by_4(9338187834737), 1)
         self.assertEqual(self.div_tester.by_4(6341723110832864), 0)  # D2,p17
 
+    def test_divisibility_by_5(self):
+        self.assertEqual(self.div_tester.by_5(9338187834735), 0)
+        self.assertEqual(self.div_tester.by_5(6341723110832864), 4)
+
     def test_divisibility_by_6(self):
         self.assertEqual(self.div_tester.by_6(61671142), 4)  # D2,p18
         self.assertEqual(self.div_tester.by_6(98234278215), 3)
+
+    def test_divisibility_by_7(self):
+        self.assertEqual(self.div_tester.by_7(61671142), 1)  # D2,p19
+        self.assertEqual(self.div_tester.by_7(6341723110832864), 6) # D2,p42
 
     def test_divisibility_by_8(self):
         self.assertEqual(self.div_tester.by_8(9898243523873937), 1)
@@ -718,6 +765,10 @@ class ModuleD_Tests(unittest.TestCase):
     def test_divisibility_by_11(self):
         self.assertEqual(self.div_tester.by_11(61671142), 5)  # D2,p16
         self.assertEqual(self.div_tester.by_11(6341723110832864), 7)  # D2,p17
+
+    def test_divisibility_by_13(self):
+        self.assertEqual(self.div_tester.by_13(61671142), 0)  # D2,p19
+        self.assertEqual(self.div_tester.by_13(6341723110832864), 1)  # D2,p42
 
 
 if __name__ == '__main__':
