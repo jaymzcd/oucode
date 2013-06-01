@@ -94,7 +94,7 @@ By setting `exclude_zero` to `True` the 0-row will not be shown.
 
 #### Handbook/Module Solvers
 
-The code within the ms221 module are a variety of functions that tackle
+The code within the MS221 module are a variety of functions that tackle
 various key bits within the course in terms of the step by step solutions and
 methods that you would work through. For example calculating eigenlines and values
 for a particular matrix is very easy with sympy but rather than using a one line
@@ -132,9 +132,8 @@ come from the various activities & excercises throughout the course.
 
 I completed these prior to doing much so there's no code relating to these modules.
 
-### M336
+### M366
 
-This AI course has yet to begin formally. The language used within it is _netlogo_.
-Hopefully I'll end up trying some of the ideas and concepts around neural nets
-in python using existing libraries and numpy.
+For this I'm making use of [PyBrain](http://pybrain.org/), a modular
+_Machine Learning Library_ for Python.
 

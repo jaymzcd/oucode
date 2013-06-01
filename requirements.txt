@@ -2,3 +2,4 @@ Shapely
 matplotlib
 scipy
 numpy
+PyBrain
