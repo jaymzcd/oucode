@@ -1,5 +1,7 @@
 # Open University Code
 
+## About this code & who I am
+
 Code that I write to help me work through my Open University degree. I have or am
 studying the following modules:
 
@@ -10,7 +12,16 @@ studying the following modules:
 
 As a linux & python user I tend to do most of my work using [scipy](http://scipy.org)
 within pylab. In addition I make use of [sympy](http://sympy.org). I do my formal
-writing using [lyx](http://lyx.org).
+writing using [lyx](http://lyx.org). In the coming years I'm aiming to the following
+in this order (availability permitting):
+
+* M208 - Pure Mathematics (October 2013)
+* MT365 - Graphs, networks and design (Spring 2014)
+* MST210 - Mathematical methods, models and modelling (October 2014)
+* SM358 - The quantum world (October 2015)
+* M381 - Number theory and mathematical logic (Spring 2016)
+* M336 - Groups and geometry (October 2016)
+
 
 ![ou](http://www.open.ac.uk/includes/headers-footers/oulogo-56.jpg)
 
@@ -21,9 +32,11 @@ the [National Museum of Computing](http://www.tnmoc.org/).
 
 You can find some more about me on a rather stale blog at [jaymz.eu](http://jaymz.eu)
 
-## MS221
+## Code by course
 
-### Linear transforms
+### MS221
+
+#### Linear transforms
 
 Classes to do general linear transforms and visualize the output, including:
 
@@ -54,7 +67,7 @@ tangent of the angle theta.
 
 ![rotation example](http://i.imgur.com/fmXJWVW.png)
 
-### Function plots
+#### Function plots
 
 Simple function plots of single parameter. The expression parsing is handled using
 [sympy](http://docs.sympy.org/dev/modules/parsing.html). This is also used
@@ -64,7 +77,7 @@ to create Latex titles for matplotlib.
 
 ![plot example](http://i.imgur.com/hafUmYy.png)
 
-### Cayley tables for integer rings
+#### Cayley tables for integer rings
 
 Uses sage & matplotlib to visualize a multiplcation table for integer rings. That
 is the remainders mod X for integers up to X. Imagemagick is used to montage
@@ -76,7 +89,7 @@ By setting `exclude_zero` to `True` the 0-row will not be shown.
 
 ![rings](http://i.imgur.com/FEud05mh.png)
 
-### Handbook/Module Solvers
+#### Handbook/Module Solvers
 
 The code within the `solvers.py` module are a variety of functions that tackle
 various key bits within the course in terms of the step by step solutions and
@@ -96,11 +109,11 @@ There is code to deal with:
 * Fixed points and cycles, classifications of such points as repelling,
   attracting, super-attracting etc.
 
-## M248 & MST121
+### M248 & MST121
 
 I completed these prior to doing much so there's no code relating to these modules.
 
-## M336
+### M336
 
 This AI course has yet to begin formally. The language used within it is _netlogo_.
 Hopefully I'll end up trying some of the ideas and concepts around neural nets
