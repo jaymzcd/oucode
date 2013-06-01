@@ -25,16 +25,34 @@ You can find some more about me on a rather stale blog at [jaymz.eu](http://jaym
 
 ### Linear transforms
 
-Python code to (so far):
+Classes to do general linear transforms and visualize the output, including:
 
 * Transform the unit square with an abritary 2x2 matrix and plot result
 * Generate terms of a linear recurrance relation with given transform & inital term
 
 Matplotlib provides output diagrams as PNGs:
 
+![sequence example](http://i.imgur.com/XIPeNek.png)
 
-![sequence example](http://i.imgur.com/4HneFIB.png)
 ![transform example](http://i.imgur.com/vRCDAAh.png)
+
+A `RotationTransform` and `ReflectionTransform` allow for specifing a given matrix
+simply by providin the parameter _theta_. These inherit from the base `LinearTransform`
+class so examining the effect on the unit square is easily visualised. For example:
+
+```Python
+    from sympy import pi
+    r_pi4 = RotationTransform(pi/4)
+    r_pi4.unit_square_transform()
+    r_pi4.plot_line()
+```
+
+Using `plot_line` will draw the linear function whose gradient corresponds to the
+tangent of the angle theta.
+
+![reflection example](http://i.imgur.com/HsR0nmL.png)
+
+![rotation example](http://i.imgur.com/fmXJWVW.png)
 
 ### Function plots
 
