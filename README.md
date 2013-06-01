@@ -54,6 +54,7 @@ simply by providin the parameter _theta_. These inherit from the base `LinearTra
 class so examining the effect on the unit square is easily visualised. For example:
 
 ```Python
+    from helpers.linear_transforms import RotationTransform
     from sympy import pi
     r_pi4 = RotationTransform(pi/4)
     r_pi4.unit_square_transform()
@@ -79,6 +80,8 @@ to create Latex titles for matplotlib.
 
 #### Cayley tables for integer rings
 
+These are to be found within `number_theory/intring.py`.
+
 Uses sage & matplotlib to visualize a multiplcation table for integer rings. That
 is the remainders mod X for integers up to X. Imagemagick is used to montage
 the resultant files together for comparassion.
@@ -91,7 +94,7 @@ By setting `exclude_zero` to `True` the 0-row will not be shown.
 
 #### Handbook/Module Solvers
 
-The code within the `solvers.py` module are a variety of functions that tackle
+The code within the ms221 module are a variety of functions that tackle
 various key bits within the course in terms of the step by step solutions and
 methods that you would work through. For example calculating eigenlines and values
 for a particular matrix is very easy with sympy but rather than using a one line
@@ -108,6 +111,22 @@ There is code to deal with:
   discontinuties, ranges and so on.
 * Fixed points and cycles, classifications of such points as repelling,
   attracting, super-attracting etc.
+
+Run `ms221_tests.py` to check a variety of sample questions - most of which
+come from the various activities & excercises throughout the course.
+
+```python
+
+    from ms221.linear_recurrences import linear_second_order_recurrence
+    from ms221.function_tests import function_type
+    from ms221.divisibility_tests import DivisibilityTests
+    from ms221.eigen import matrix_eigenvalues, matrix_eigenlines, matrix_eigenvector
+    from ms221.fixed_points import classify_fixed_points, fixed_points
+```
+
+    Ran 20 tests in 0.461s
+    OK
+
 
 ### M248 & MST121
 
