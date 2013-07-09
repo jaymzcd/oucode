@@ -1,5 +1,6 @@
 import sys
 from pylab import *
+from sympy import Symbol, solve
 
 
 def setup_mpl():
@@ -72,7 +73,7 @@ def parse_pat(pfile):
     return data
 
 
-def scatterplot_pattern(pfile):
+def scatterplot_pattern(pfile, color='r'):
     inputs, outputs = parse_pat(pfile)
 
     num_outputs = outputs.shape[1]
@@ -80,11 +81,81 @@ def scatterplot_pattern(pfile):
 
     assert num_inputs == 2
 
-    scatter(inputs[:, 0], inputs[:, 1], c='r')
-    grid()
-    show()
+    # hacky - this is just for TMA work - the scatterplot itself is ok
+    # but we want to group this into 3 x 5 elements (for the A patterns at least)
+    shapes = ('o', '^', 's')
+    colors = ('r', 'g', 'b')
+    labels = ('Class 1', 'Class 2', 'Class 3')
+
+    for idx, x in enumerate((0, 5, 10)):
+        scatter(inputs[:, 0][x:x + 5], inputs[:, 1][x:x + 5], marker=shapes[idx], c=colors[idx], s=100, label=labels[idx])
+
+
+def plot_partition(w1, w2, bias, color='red', label=None):
+    """
+        Given weights and bias solve the equation f(x)=0 for
+        x2. We can then plot this. Plotting several of these
+        functions should partition the scatterplot of the input
+        space if the network has been trained suitably.
+    """
+
+    # Use sympy to solve this symbolically - i sort of prefer doing this stuff
+    # in symbols rather than matrices in numpy/matlab etc
+    x1, x2 = Symbol('x1'), Symbol('x2')
+    solution = solve(w1 * x1 + w2 * x2 + bias, x2)[0]
+    m, c = solution.coeff(x1, 1), solution.coeff(x1, 0)
+
+    t = linspace(0, 1)
+    plot(t, m*t + c, color=color, label=label)
 
 
 if __name__ == '__main__':
     setup_mpl()
-    scatterplot_pattern(sys.argv[1])
+
+    # Plot a pattern - this is a bit hacky at the minute as it's
+    # explicitly segmenting the data in a non-generic way. Each
+    # pattern in the sample file has 5 outputs for each class
+    scatterplot_pattern('/home/jaymz/development/mathematics/openuni-notes/courses/m366/notes/TMA03_A.pat')
+
+    # These figures are from a simulation network file from JavaNNS. You can
+    # read off the data, for example:
+    #
+    # unit definition section :
+    #
+    # no. | typeName | unitName | act      | bias     | st | position | act func | out func | sites
+    # ----|----------|----------|----------|----------|----|----------|----------|----------|-------
+    #   1 |          | Input    |  0.90000 | -0.72631 | i  | 3,6,1    |||
+    #   2 |          | Input    |  0.10000 |  0.39628 | i  | 7,6,1    |||
+    #   3 |          | Output   |  0.00000 |  3.38851 | o  | 1,1,1    |||
+    #   4 |          | Output   |  0.13079 | 17.56716 | o  | 5,2,1    |||
+    #   5 |          | Output   |  0.99868 | -13.04124 | o  | 9,1,1    |||
+    # ----|----------|----------|----------|----------|----|----------|----------|----------|-------
+    #
+    #
+    # connection definition section :
+    #
+    # target | site | source:weight
+    # -------|------|------------------------------------------------------------------------------------------------------------
+    #      3 |      | 2:12.66246, 1:-29.89602
+    #      4 |      | 2:-27.89854, 1:-18.52970
+    #      5 |      | 2: 8.80255, 1:20.88110
+    # -------|------|------------------------------------------------------------------------------------------------------------
+    #
+
+    w1, w2, wb = -29.89062, 12.66246, 3.38851
+    u1, u2, ub = -18.52970, -27.89854, 17.56716
+    v1, v2, vb = 20.88110, 8.80255, -13.04124
+
+    # Plot each partition for the given weights and biases
+    plot_partition(w1, w2, wb, color='darkred', label='Output 1')
+    plot_partition(u1, u2, ub, color='darkblue', label='Output 2')
+    plot_partition(v1, v2, vb, color='darkgreen', label='Output 3')
+
+    grid()
+    legend()
+
+    # Limit the axis for prettyness
+    ylim(0, 1)
+    xlim(0, 1)
+
+    show()
