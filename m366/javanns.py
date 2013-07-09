@@ -109,8 +109,52 @@ def plot_partition(w1, w2, bias, color='red', label=None):
     plot(t, m*t + c, color=color, label=label)
 
 
-if __name__ == '__main__':
-    setup_mpl()
+def validation_table_assess():
+    with open('/home/jaymz/development/mathematics/openuni-notes/courses/m366/tmas/tma03/q2a-validation.res') as f:
+        table = f.read()
+
+    def convert(x):
+        try:
+            return int(x)
+        except ValueError:
+            return float(x)
+        except:
+            raise Exception('Need either int or float to convert')
+
+    def is_ambiguous(outputs, chosen, correct, is_correct):
+        if is_correct:
+            return min([abs(chosen - x) for x in outputs if x != chosen]) < 0.3
+        else:
+            return abs(correct - chosen) < 0.5
+
+    SEGMENT_LENGTH = 4
+    HEADER_LENGTH = 10
+    data = table.split('\n')[HEADER_LENGTH:]
+    data = [data[j: j + SEGMENT_LENGTH] for j in range(0, len(data), SEGMENT_LENGTH)]
+    data = [[i[2].split(' '), i[3].split(' ')] for i in data if len(i) > 1]
+
+    for idx, row in enumerate(data):
+        data[idx][0] = [convert(x) for x in row[0]]
+        data[idx][1] = [convert(x) for x in row[1]]
+
+        training = data[idx][0]
+        output = data[idx][1]
+
+        max_training = training.index(max(training))
+        max_output = output.index(max(output))
+
+        is_correct =  max_training == max_output
+
+        if is_ambiguous(output, output[max_output], output[max_training], is_correct):
+            data[idx].append(0)
+        elif is_correct:
+            data[idx].append(1)
+        else:
+            data[idx].append(-1)
+
+    return data
+
+def partition_plot_example():
 
     # Plot a pattern - this is a bit hacky at the minute as it's
     # explicitly segmenting the data in a non-generic way. Each
@@ -159,3 +203,8 @@ if __name__ == '__main__':
     xlim(0, 1)
 
     show()
+
+
+if __name__ == '__main__':
+    setup_mpl()
+    data = validation_table_assess()
