@@ -78,9 +78,9 @@ def biased_roulette_wheel(population, fitness_values):
         proportions.append(val/total)
 
     if SHOW_MESSAGES:
-        print "For the fitness values: `%r` the proportions for each gene are:\n" % fitness_values
+        print "For the fitness values: `%r` (total %d) the proportions for each gene are:\n" % (fitness_values, sum(fitness_values)
         for i, gene in enumerate(population):
-            print "* %s: %0.3f%%" % (gene, proportions[i])
+            print "* %s: %0.1f%%" % (gene, proportions[i] * 100)
         print "\n"
 
     return proportions
@@ -91,6 +91,10 @@ def cumulative_proportions(proportions):
         Returns the proportions summed up to each point to make calculating
         which one bins a given random value easier
     """
+
+    if SHOW_MESSAGES:
+        print "\n".join(["%0.1f%% - %0.1f%%" % (sum(proportions[:i]), sum(proportions[:i+1])) for i in range(len(proportions))])
+
     return [sum(proportions[:i + 1]) for i, x in enumerate(proportions)]
 
 
@@ -125,19 +129,19 @@ def mating_pool(population, proportions):
         indexes.append(gene_index)
 
         if SHOW_MESSAGES:
-            print "* Random value: %0.3f,  selected gene: %s" % (bound, population[gene_index])
+            print "* Random value: %0.3f = %0.1f%%,  selected gene: %s" % (bound, bound * 100, population[gene_index])
 
     return [population[index] for index in indexes]
 
 
-def mutate(bit, likelyhood=0.1):
+def mutate(bit, likelihood=0.1):
     """
-        Randomly mutate a bit dependant on a given likelyhood. Bits are 1 or 0
+        Randomly mutate a bit dependant on a given likelihood. Bits are 1 or 0
         so we cast this to a boolean then not that and recast back to integer.
         If we don't need to mutate we just return the bit untouched
     """
     die = random()
-    should_mutate = die < likelyhood
+    should_mutate = die < likelihood
 
     verb = 'stays'
 
@@ -166,7 +170,7 @@ def mutate_population(population, rate=0.1):
             print "### %s\n" % convert_fromlist(gene)
             print "Gene input: `%s`\n" % convert_fromlist(gene)
 
-        mutated_gene = [mutate(bit, likelyhood=rate) for bit in gene]
+        mutated_gene = [mutate(bit, likelihood=rate) for bit in gene]
 
         if SHOW_MESSAGES:
             print "\nMutated output: `%s`\n" % convert_fromlist(mutated_gene)
@@ -184,7 +188,7 @@ def crossover_genes(gene_1, gene_2):
     """
     assert(len(gene_1) == len(gene_2))
 
-    # Generate a point for crossover - note the minium is 1
+    # Generate a point for crossover - note the minimum is 1
     crossover_point = randint(1, len(gene_1) - 1)
 
     if SHOW_MESSAGES:
@@ -292,7 +296,7 @@ if __name__ == '__main__':
     initial_fitness = [fitness_func(gene) for gene in population]
 
     if SHOW_MESSAGES:
-        print "# Genetic Algorithims - Evolution of populations\n"
+        print "# Genetic Algorithms - Evolution of populations\n"
         print "## Inital population"
 
         data = zip(population, initial_fitness)

@@ -44,6 +44,14 @@ class Knapsack(object):
         print "Total capacity: %d\n" % capacity
 
     @property
+    def set_weights(self):
+        return [w for i, w in enumerate(self.weights) if bitstring[i] == '1']
+
+    @property
+    def set_values(self):
+        return [v for i, v in enumerate(self.values) if bitstring[i] == '1']
+
+    @property
     def valid(self):
         return self.weight <= self.capacity
 
@@ -56,8 +64,8 @@ class Knapsack(object):
         return sum([weight * int(self.bitstring[i]) for i, weight in enumerate(self.weights)])
 
     def __str__(self):
-        return 'Knapsack %s [Valid: %s] (Value: %d, Weight: %d)' % \
-            (self.bitstring, self.valid, self.value, self.weight)
+        return 'Knapsack %s - Valid: %s\nValue: %s=%d\nWeight: %s=%d\n' % \
+            (self.bitstring, self.valid, '+'.join([str(x) for x in self.set_values]), self.value, '+'.join([str(x) for x in self.set_weights]), self.weight)
 
     def fitness(self, penalty):
         """
@@ -127,13 +135,13 @@ if __name__ == '__main__':
 
     sack = Knapsack(values, weights)
     sacks = ['000111', '010110', '100100', '111111']
-
     penalty = Penalty()
 
     for bitstring in sacks:
         sack.bitstring = bitstring
+        # print '\n'.join(['%d/%d = %0.3f' % (sack.values[i], sack.weights[i], sack.values[i]/sack.weights[i]) for i, w in enumerate(sack.weights)])
+        # print sack
 
-        print sack
         print "Fitness: AP1: %0.4f, AP2: %0.4f, AP3: %0.4f\n" % (
             sack.fitness(penalty.ap1),
             sack.fitness(penalty.ap2),
