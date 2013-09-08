@@ -9,19 +9,18 @@ studying the following modules:
 * M248 - Analysing Data (Spring 2012, Grade 2 pass)
 * MS221 - Exploring Mathematics (Autumn 2012, Distinction)
 * M336 - Artifical & Natural Intelligence (Currently studying - Spring 2013)
+* M208 - Pure Mathematics (October 2013)
 
 As a linux & python user I tend to do most of my work using [scipy](http://scipy.org)
 within pylab. In addition I make use of [sympy](http://sympy.org). I do my formal
 writing using [lyx](http://lyx.org). In the coming years I'm aiming to the following
 in this order (availability permitting):
 
-* M208 - Pure Mathematics (October 2013)
 * MT365 - Graphs, networks and design (Spring 2014)
 * MST210 - Mathematical methods, models and modelling (October 2014)
 * SM358 - The quantum world (October 2015)
 * M381 - Number theory and mathematical logic (Spring 2016)
 * M336 - Groups and geometry (October 2016)
-
 
 ![ou](http://www.open.ac.uk/includes/headers-footers/oulogo-56.jpg)
 

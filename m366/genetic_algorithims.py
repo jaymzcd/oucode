@@ -177,8 +177,15 @@ def mutate_population(population, rate=0.1):
 
 
 def crossover_genes(gene_1, gene_2):
+    """
+        Cross over genes by splitting them at a randomly selected point
+        along their lengths (assumes genes are equal length) and then
+        combining them into two new children
+    """
     assert(len(gene_1) == len(gene_2))
-    crossover_point = randint(0, len(gene_1) - 1)
+
+    # Generate a point for crossover - note the minium is 1
+    crossover_point = randint(1, len(gene_1) - 1)
 
     if SHOW_MESSAGES:
         print "Crossover point for Gene 1 `%s` and Gene 2 `%s` is %d\n" % (gene_1, gene_2, crossover_point)
