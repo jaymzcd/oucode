@@ -135,5 +135,109 @@ I completed these prior to doing much so there's no code relating to these modul
 ### M366
 
 For this I'm making use of [PyBrain](http://pybrain.org/), a modular
-_Machine Learning Library_ for Python.
+_Machine Learning Library_ for Python as well as [JavaNNS](http://www.ra.cs.uni-tuebingen.de/software/JavaNNS/)
+and [Netlogo](http://ccl.northwestern.edu/netlogo/) - both of which are used as
+teaching and research tools on the course.
+
+The code is a bit more specific than the more general stuff in the pure maths
+modules so is perhaps not that suited for others use without being prepared
+to hack on it.
+
+#### JavaNNS Pattern (.PAT) to Numpy Array
+
+The function `parse_pat` provides a means to read in pattern files for JavaNNS
+and convert them into a numpy array - the benefit of this then is intutive slicing
+and mapping operations across the entire matrix.
+
+It assumes that the data begins after the last row specifing a number of units.
+
+For example the following file:
+
+    SNNS pattern definition file V3.2
+    generated at Mon Apr 25 18:08:50 1994
+
+    # For use in M366 2009B TMA03 Question 1
+
+    No. of patterns : 15
+    No. of input units : 2
+    No. of output units : 3
+
+    # Al   RfI  C1    C2    C3
+    0.246   0.478   1   0   0
+    0.239   0.608   1   0   0
+    0.100   0.874   1   0   0
+    0.299   0.513   1   0   0
+    0.310   0.470   1   0   0
+    0.367   0.384   0   1   0
+    0.264   0.349   0   1   0
+    0.356   0.332   0   1   0
+    0.370   0.332   0   1   0
+    0.335   0.349   0   1   0
+    0.608   0.547   0   0   1
+    0.552   0.900   0   0   1
+    0.445   0.676   0   0   1
+    0.619   0.263   0   0   1
+    0.900   0.100   0   0   1
+
+Results in an numpy array thus:
+
+    (array([[ 0.246,  0.478],
+           [ 0.239,  0.608],
+           [ 0.1  ,  0.874],
+           [ 0.299,  0.513],
+           [ 0.31 ,  0.47 ],
+           [ 0.367,  0.384],
+           [ 0.264,  0.349],
+           [ 0.356,  0.332],
+           [ 0.37 ,  0.332],
+           [ 0.335,  0.349],
+           [ 0.608,  0.547],
+           [ 0.552,  0.9  ],
+           [ 0.445,  0.676],
+           [ 0.619,  0.263],
+           [ 0.9  ,  0.1  ]]),
+     array([[ 1.,  0.,  0.],
+           [ 1.,  0.,  0.],
+           [ 1.,  0.,  0.],
+           [ 1.,  0.,  0.],
+           [ 1.,  0.,  0.],
+           [ 0.,  1.,  0.],
+           [ 0.,  1.,  0.],
+           [ 0.,  1.,  0.],
+           [ 0.,  1.,  0.],
+           [ 0.,  1.,  0.],
+           [ 0.,  0.,  1.],
+           [ 0.,  0.,  1.],
+           [ 0.,  0.,  1.],
+           [ 0.,  0.,  1.],
+           [ 0.,  0.,  1.]]))
+
+#### Partitioning of input space
+
+This is useful to visualize if a single layer perceptron is going to be any use
+in classifying a given set of data.
+
+![partitioning](http://i.imgur.com/bnLAuNg.png)
+
+#### Assessment of validation table
+
+The `validation_table_assess` function uses the strategy suggested in Block 4
+to judge the effectivness of the networks perfomance according to the following
+rules:
+
+* score 1 for a correct response
+* score -1 for an incorrect response
+* score 0 for an _ambiguous_ response
+
+Ambiguity is defined as comparing the other output responses and calculating
+the difference between this and the chosen 'correct' response. Then:
+
+* if the chosen response is the _true correct_ one and absolute differences are within threshold
+* or the chosen response is _not the true correct_ and the absolute difference is within a second threshold
+
+Then the score is defined to be 0. The scores can then be summed and divided by
+the total to yield a percentage that refelcts the ability of the network to
+effectivly classify data. If this is compared to the error graph within JavaNNS
+when a data set is validated against a pre-trained network the figures should
+over time agree quite closely (within a few %).
 

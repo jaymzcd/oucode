@@ -34,7 +34,7 @@ def parse_pat(pfile):
         data = pattern_file.read().split('\n')
 
     # Strip out comments and empty rows
-    data = [row.strip() for row in data if len(row) > 0 and '#' not in row]
+    data = [row.strip() for row in data if len(row) > 1 and '#' not in row]
 
     # Need to find out where the data starts, all pattern files will specify
     # some number of input/outputs prefixed with "No. of" so we can look for
@@ -64,7 +64,6 @@ def parse_pat(pfile):
     points = array(points)
 
     # Now return the data sliced into input & output arrays
-
     if outputs:
         data = points[:, :inputs], points[:, inputs:]
     else:
