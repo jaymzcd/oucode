@@ -7,7 +7,7 @@ studying the following modules:
 
 * MST121 - Using Mathematics (Autumn 2011, pass, no other grade type)
 * M248 - Analysing Data (Spring 2012, Grade 2 pass)
-* MS221 - Exploring Mathematics (Currently studying - Autumn 2012)
+* MS221 - Exploring Mathematics (Autumn 2012, Distinction)
 * M336 - Artifical & Natural Intelligence (Currently studying - Spring 2013)
 
 As a linux & python user I tend to do most of my work using [scipy](http://scipy.org)
@@ -241,3 +241,10 @@ effectivly classify data. If this is compared to the error graph within JavaNNS
 when a data set is validated against a pre-trained network the figures should
 over time agree quite closely (within a few %).
 
+#### Genetic Algorithims
+
+Within the `genetic_algorithims.py` file is code to mutate and crossover a supplied
+population of bitstrings. This was created mainly whilst working through TMA04
+so it uses a supplied list of inital fitness values for the population through
+a dummy function. Replacing this with a real fitness calculation turns this into
+actual working GA evolution code, albeit very simply implemented.

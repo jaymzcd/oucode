@@ -18,6 +18,9 @@
 # practical. However the purpose of all this is working through the
 # examples/tmas/papers to get a better understanding of the material. More 'pen
 # and paper' than serious.
+#
+# If SHOW_MESSAGES is true then this will generate a pretty markdown file detailing
+# the complete evolution of the population specified in the __main__ method
 
 from __future__ import division
 from random import random, randint
@@ -39,6 +42,7 @@ def convert_fromlist(l):
         Convert [0, 1, 1, 0] into '0110'
     """
     return ''.join([str(i) for i in l])
+
 
 def convert_population_tolist(p):
     """
@@ -159,7 +163,7 @@ def mutate_population(population, rate=0.1):
     for gene in pop:
 
         if SHOW_MESSAGES:
-            print "### %s\n" %  convert_fromlist(gene)
+            print "### %s\n" % convert_fromlist(gene)
             print "Gene input: `%s`\n" % convert_fromlist(gene)
 
         mutated_gene = [mutate(bit, likelyhood=rate) for bit in gene]
@@ -217,7 +221,7 @@ def crossover_population(population, rate=0.5):
         print "Crossing over population of size %d.\n" % population_size
 
     def _select_genes(limit):
-        assert(limit>1)
+        assert(limit > 1)
 
         genes = []
         for i in range(limit):
@@ -269,7 +273,16 @@ if __name__ == '__main__':
         '11110011',
     ]
 
-    initial_fitness = [84, 12, 55, 66, 68, 43]
+    def fitness_func(gene):
+        """
+            A dummy function that just uses the inital supplied data to
+            return the fitness of a given gene
+        """
+        vals = [84, 12, 55, 66, 68, 43]
+        index = population.index(gene)
+        return vals[index]
+
+    initial_fitness = [fitness_func(gene) for gene in population]
 
     if SHOW_MESSAGES:
         print "# Genetic Algorithims - Evolution of populations\n"
