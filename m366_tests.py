@@ -1,5 +1,5 @@
 import unittest
-from m366.genetic_algorithims import convert_frombitstring, convert_fromlist
+from m366.ga_evolution import convert_frombitstring, convert_fromlist
 
 
 class GATests(unittest.TestCase):
